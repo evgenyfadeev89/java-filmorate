@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FilmController {
 
-    Map<Long, Film> films = new HashMap<>();
+    private Map<Long, Film> films = new HashMap<>();
 
     @GetMapping
     public Collection<Film> findall() {

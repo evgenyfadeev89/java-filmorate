@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/users")
 @Slf4j
 public class UserController {
-    Map<Long, User> users = new HashMap<>();
+    private Map<Long, User> users = new HashMap<>();
 
     @GetMapping
     public Collection<User> findall() {

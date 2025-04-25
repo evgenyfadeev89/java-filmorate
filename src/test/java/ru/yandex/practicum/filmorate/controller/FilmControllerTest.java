@@ -25,7 +25,7 @@ class FilmControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    FilmController filmController;
+    private FilmController filmController;
 
     @BeforeEach
     void setUp() {

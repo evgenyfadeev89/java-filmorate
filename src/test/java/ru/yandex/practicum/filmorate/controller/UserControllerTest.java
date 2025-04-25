@@ -25,7 +25,7 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    UserController userController;
+    private UserController userController;
 
     @BeforeEach
     void setUp() {
