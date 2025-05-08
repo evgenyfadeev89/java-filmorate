@@ -104,6 +104,24 @@ class FilmControllerTest {
                 );
     }
 
+    @Test
+    void addLike() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/user/create/request/user.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post(PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/film/create/request/film.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.put(PATH + "/2/like/6"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        jsonFromFileReader("controller/film/create/response/film-likes.json")));
+    }
+
     private String jsonFromFileReader(String filename) {
         try {
             return Files.readString(ResourceUtils.getFile("classpath:" + filename).toPath(),

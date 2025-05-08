@@ -1,96 +1,58 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/users")
 @Slf4j
+@RequiredArgsConstructor
 public class UserController {
-    private Map<Long, User> users = new HashMap<>();
+    UserService userService;
 
-    @GetMapping
-    public Collection<User> findall() {
-        log.info("Вызов показа всех пользователей");
-        return users.values();
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping
+    @GetMapping("/users")
+    public Collection<User> findAll() {
+        return userService.findAll();
+    }
+
+    @PostMapping("/users")
     public User create(@Valid @RequestBody User user) {
-        log.info("Создание пользователя");
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-
-        user.setId(generateId());
-        users.put(user.getId(), user);
-        return user;
+        return userService.create(user);
     }
 
-    @PutMapping
-    public User update(@RequestBody User newUser) {
-        log.info("Обновление пользователя");
-        if (users.containsKey(newUser.getId())) {
-            User oldUser = users.get(newUser.getId());
-
-            if (newUser.getEmail() != null &&
-                    !newUser.getEmail().isBlank() &&
-                    newUser.getEmail().matches(".+@.+\\..+")) {
-                oldUser.setEmail(newUser.getEmail());
-            } else if (newUser.getEmail() != null) {
-                log.error("Ошибка: Некорректное значение email");
-                throw new ValidationException("Некорректное значение email");
-            }
-
-            if (newUser.getLogin() != null && !newUser.getLogin().contains(" ")) {
-                oldUser.setLogin(newUser.getLogin());
-            } else if (newUser.getLogin() != null) {
-                log.error("Ошибка: Некорректное значение Login");
-                throw new ValidationException("Некорректное значение Login");
-            }
-
-            if (newUser.getName() == null) {
-                if (newUser.getLogin() != null && !newUser.getLogin().contains(" ")) {
-                    oldUser.setName(newUser.getLogin());
-                } else if (newUser.getLogin() != null) {
-                    log.error("Ошибка: Некорректное значение Login");
-                    throw new ValidationException("Некорректное значение Login");
-                }
-            } else {
-                oldUser.setName(newUser.getName());
-            }
-
-            if (newUser.getBirthday().isBefore(LocalDate.now())) {
-                oldUser.setBirthday(newUser.getBirthday());
-            } else {
-                log.error("Ошибка: Некорректное значение для Дня Рождения");
-                throw new ValidationException("Некорректное значение для Дня Рождения");
-            }
-
-            return oldUser;
-        }
-
-        log.error("Ошибка: Не найден такой пользователь");
-        throw new NotFoundException("Не найден такой пользователь");
+    @PutMapping("/users")
+    public User update(@Valid @RequestBody User newUser) {
+        return userService.update(newUser);
     }
 
+    @PutMapping("/users/{id}/friends/{friendId}")
+    public User addFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
+        return userService.addFriend(id, friendId);
+    }
 
-    private Long generateId() {
-        Long currentMaxId = users.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
+    @DeleteMapping("/users/{id}/friends/{friendId}")
+    public User removeFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
+        return userService.removeFriend(id, friendId);
+    }
 
-        return ++currentMaxId;
+    @GetMapping("/users/{id}/friends")
+    public Collection<User> viewFriends(@PathVariable("id") Long id) {
+        return userService.viewFriends(id);
+    }
+
+    @GetMapping("/users/{id}/friends/common/{otherId}")
+    public Collection<User> commonFriends(@PathVariable("id") Long id, @PathVariable("otherId") Long otherId) {
+        return userService.commonFriends(id, otherId);
     }
 }
