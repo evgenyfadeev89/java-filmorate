@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,11 +26,13 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private UserService userService;
+
     private UserController userController;
 
     @BeforeEach
     void setUp() {
-        userController = new UserController();
+        userController = new UserController(userService);
     }
 
     @Test

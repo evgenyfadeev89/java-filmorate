@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,10 +27,11 @@ class FilmControllerTest {
     private MockMvc mockMvc;
 
     private FilmController filmController;
+    private FilmService filmService;
 
     @BeforeEach
     void setUp() {
-        filmController = new FilmController();
+        filmController = new FilmController(filmService);
     }
 
     @Test

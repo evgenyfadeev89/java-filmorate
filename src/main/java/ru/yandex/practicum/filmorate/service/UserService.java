@@ -19,11 +19,6 @@ public class UserService {
 
     private final UserStorage userStorage;
 
-    @Autowired
-    public UserService(InMemoryUserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
-
     public User addFriend(Long id, Long friendId) {
         log.info("Добавление пользователя в друзья");
         User user = userStorage.findAll()

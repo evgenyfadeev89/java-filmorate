@@ -1,15 +1,11 @@
 package ru.yandex.practicum.filmorate.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
 public class ValidationException extends RuntimeException {
-    String parametr;
-    String message;
-
-    public ValidationException(String message, String parameter) {
-        this.parametr = parameter;
-        this.message = message;
-    }
-
-    public String getParametr() {
-        return parametr;
-    }
+    private final String parametr;
+    private final String message;
 }
