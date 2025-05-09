@@ -32,16 +32,16 @@ public class FilmService {
 
     public Film addLike(Long id, Long userId) {
         log.info("Добавление нового лайка");
-        Film film = filmStorage.findAll().
-                stream().
-                filter(flm -> flm.getId() == id).
-                findFirst().
-                orElseThrow(() -> new NotFoundException("Фильм с таким id: " + id + " не найден"));
-        User user = userService.findAll().
-                stream().
-                filter(usr -> usr.getId() == userId).
-                findFirst().
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
+        Film film = filmStorage.findAll()
+                .stream()
+                .filter(flm -> flm.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Фильм с таким id: " + id + " не найден"));
+        User user = userService.findAll()
+                .stream()
+                .filter(usr -> usr.getId() == userId)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
 
         film.getLikes().add(userId);
         filmStorage.update(film);
@@ -51,16 +51,16 @@ public class FilmService {
 
     public Film removeLike(Long id, Long userId) {
         log.info("Удаление лайка");
-        Film film = filmStorage.findAll().
-                stream().
-                filter(flm -> flm.getId() == id).
-                findFirst().
-                orElseThrow(() -> new NotFoundException("Фильм с таким id: " + id + " не найден"));
-        User user = userService.findAll().
-                stream().
-                filter(usr -> usr.getId() == userId).
-                findFirst().
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
+        Film film = filmStorage.findAll()
+                .stream()
+                .filter(flm -> flm.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Фильм с таким id: " + id + " не найден"));
+        User user = userService.findAll()
+                .stream()
+                .filter(usr -> usr.getId() == userId)
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
 
         if (film.getLikes().contains(userId)) {
             film.getLikes().remove(userId);
