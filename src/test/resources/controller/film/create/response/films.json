@@ -1,7 +1,18 @@
-[{
-  "id": 1,
-  "name": "nisi eiusmod",
-  "description": "adipisicing",
-  "releaseDate": "1967-03-25",
-  "duration": 100
-}]
+[
+  {
+    "id": 1,
+    "name": "nisi eiusmod",
+    "description": "adipisicing",
+    "releaseDate": "1967-03-25",
+    "duration": 100,
+    "likes": []
+  },
+  {
+    "id": 2,
+    "name": "nisi eiusmod",
+    "description": "adipisicing",
+    "releaseDate": "1967-03-25",
+    "duration": 100,
+    "likes": [6]
+  }
+]

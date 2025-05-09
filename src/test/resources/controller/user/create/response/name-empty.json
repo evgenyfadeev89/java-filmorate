@@ -1,7 +1,8 @@
 {
-  "id": 3,
+  "id": 5,
   "email": "qwer@dsds.ru",
   "login": "qwerwdw",
   "name": "qwerwdw",
-  "birthday": "2024-04-24"
+  "birthday": "2024-04-24",
+  "friends":[]
 }

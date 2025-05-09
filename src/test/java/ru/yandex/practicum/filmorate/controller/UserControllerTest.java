@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,15 +26,17 @@ class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private UserService userService;
+
     private UserController userController;
 
     @BeforeEach
     void setUp() {
-        userController = new UserController();
+        userController = new UserController(userService);
     }
 
     @Test
-    void findall() throws Exception {
+    void findAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -120,6 +123,25 @@ class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                                 jsonFromFileReader("controller/user/create/response/update-user.json")
+                        )
+                );
+    }
+
+    @Test
+    void addFriend() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post(PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/user/create/request/user.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.post(PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/user/create/request/user-friend.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.put(PATH + "/3/friends/4"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                                jsonFromFileReader("controller/user/create/response/user-friends.json")
                         )
                 );
     }
