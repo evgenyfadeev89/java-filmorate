@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.ResourceUtils;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,10 +27,11 @@ class FilmControllerTest {
     private MockMvc mockMvc;
 
     private FilmController filmController;
+    private FilmService filmService;
 
     @BeforeEach
     void setUp() {
-        filmController = new FilmController();
+        filmController = new FilmController(filmService);
     }
 
     @Test
@@ -102,6 +104,24 @@ class FilmControllerTest {
                                 jsonFromFileReader("controller/film/create/response/update-film.json")
                         )
                 );
+    }
+
+    @Test
+    void addLike() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/user/create/request/user.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post(PATH)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonFromFileReader("controller/film/create/request/film.json")))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.put(PATH + "/2/like/6"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        jsonFromFileReader("controller/film/create/response/film-likes.json")));
     }
 
     private String jsonFromFileReader(String filename) {
