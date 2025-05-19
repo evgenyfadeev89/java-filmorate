@@ -29,5 +29,5 @@ public class User {
     @PastOrPresent(message = "Дата не может быть в прошлом")
     private LocalDate birthday;
 
-    private Set<Long> friends;
+    //private Set<Long> friends; //убираем такой формат хранения для спринта по SQL
 }

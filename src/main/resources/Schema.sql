@@ -1,11 +1,3 @@
-# java-filmorate
-Template repository for Filmorate project.
-
-## Схема Базы Данных
-![Схема Базы Данных](Filmorate.png)
-
-## Код DDL
-
 CREATE TABLE "film" (
   "id" int NOT NULL PRIMARY KEY,
   "name" varchar(255),
@@ -69,5 +61,4 @@ CREATE TABLE "friends_user" (
 ALTER TABLE "friends_user" ADD FOREIGN KEY ("friends_friend_id") REFERENCES "friends" ("friend_id");
 
 ALTER TABLE "friends_user" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
-
 
