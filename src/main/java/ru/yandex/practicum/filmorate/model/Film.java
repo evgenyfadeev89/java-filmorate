@@ -33,4 +33,6 @@ public class Film {
     private Long duration;
 
     private Set<Long> likes;
+    private int genre;
+    private int rating;
 }
