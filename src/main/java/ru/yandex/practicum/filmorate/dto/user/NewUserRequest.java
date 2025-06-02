@@ -24,6 +24,7 @@ public class NewUserRequest {
     public boolean hasValidEmail() {
         return !(email == null || email.isBlank() || !email.contains("@"));
     }
+
     public boolean hasValidFriends() {
         return (friends == null);
     }
