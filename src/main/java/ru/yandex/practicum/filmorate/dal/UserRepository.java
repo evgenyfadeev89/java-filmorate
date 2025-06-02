@@ -99,8 +99,8 @@ public class UserRepository extends BaseRepository<User> {
         return user;
     }
 
-    public void addFriend(Long user_id, Long friend_id) {
-        super.update(INSERT_ADD_FRIEND_QUERY, user_id, friend_id);
+    public void addFriend(Long userId, Long friendId) {
+        super.update(INSERT_ADD_FRIEND_QUERY, userId, friendId);
     }
 
     public List<User> viewFriends(long id) {
