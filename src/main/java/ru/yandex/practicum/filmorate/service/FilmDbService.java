@@ -33,22 +33,22 @@ public class FilmDbService {
 
     public void addLike(Long id, Long userId) {
         log.info("Добавление нового лайка");
-        filmRepository.findById(id).
-                orElseThrow(() -> new NotFoundException("Фильм с id " + id + " не найден"));
+        filmRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Фильм с id " + id + " не найден"));
 
-        userRepository.findById(userId).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
 
         filmRepository.addLike(id, userId);
     }
 
     public boolean removeLike(Long filmId, Long userId) {
         log.info("Удаление лайка");
-        filmRepository.findById(filmId).
-                orElseThrow(() -> new NotFoundException("Фильм с id " + filmId + " не найден"));
+        filmRepository.findById(filmId)
+                .orElseThrow(() -> new NotFoundException("Фильм с id " + filmId + " не найден"));
 
-        userRepository.findById(userId).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
 
         return filmRepository.deleteLike(filmId, userId);
     }
@@ -63,8 +63,8 @@ public class FilmDbService {
     }
 
     public FilmDto getFilmById(Long filmId) {
-        return filmRepository.findById(filmId).
-                map(FilmMapper::mapToFilmDto)
+        return filmRepository.findById(filmId)
+                .map(FilmMapper::mapToFilmDto)
                 .orElseThrow(() -> new NotFoundException("Фильм не найден с ID: " + filmId));
     }
 
