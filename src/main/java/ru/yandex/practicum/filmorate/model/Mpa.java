@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Genre {
+public class Mpa {
     private Long id;
 
     @NotBlank

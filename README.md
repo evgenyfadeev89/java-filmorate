@@ -6,16 +6,16 @@ Template repository for Filmorate project.
 
 ## Описание Базы Данных
 
-## film
+## films
 
 Содержит информацию о фильмах.
 Таблица включает такие поля:
-* первичный ключ **id** - идентификатор фильма;
+* первичный ключ **film_id** - идентификатор фильма;
 * **name** - название фильма;
 * **description** - описание фильма;
 * **release_date** - дата релиза;
 * **duration** - продолжительность фильма в минутах;
-* **rating_id** - рейтинг Ассоциации кинокомпаний.
+* **mpa_id** - рейтинг Ассоциации кинокомпаний.
 
 ## film_genres
 
@@ -36,20 +36,20 @@ Template repository for Filmorate project.
 Содержит информацию о жанрах фильмов.
 Таблица включает такие поля:
 * первичный ключ **genre_id** - идентификатор жанра
-* **genre_name** - название жанра.
+* **genre** - название жанра.
 
 ## rating
 
 Содержит информацию о возрастных ограничениях фильмов.
 Таблица включает такие поля:
-* первичный ключ **rating_id** - код рейтинга Ассоциации кинокомпаний(G, PG, PG-13, R, NC-17),
-* **rating_name** - описание кода рейтинга.
+* первичный ключ **mpa_id** - код рейтинга Ассоциации кинокомпаний(G, PG, PG-13, R, NC-17),
+* **mpa** - описание кода рейтинга.
 
-## user
+## users
 
 Содержит информацию о пользователях.
 Таблица включает такие поля:
-* первичный ключ **id** - идентификатор пользователя,
+* первичный ключ **user_id** - идентификатор пользователя,
 * **email** - электронная почта,
 * **login** - логин,
 * **name** - имя,
@@ -58,68 +58,56 @@ Template repository for Filmorate project.
 
 ## Код DDL
 
-CREATE TABLE "film" (
-  "id" int NOT NULL PRIMARY KEY,
-  "name" varchar(255),
-  "description" varchar(255),
-  "release_date" date,
-  "duration" int,
-  "rating_id" int
+CREATE TABLE if not exists "mpa_rating" (
+"mpa_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+"mpa" varchar(255) NOT NULL
 );
 
-CREATE TABLE "user" (
-  "id" int NOT NULL PRIMARY KEY,
-  "email" varchar(255),
-  "login" varchar(255),
-  "name" varchar(255),
-  "birthday" date
+CREATE TABLE if not exists "genres" (
+"genre_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+"genre" varchar(255) NOT NULL
 );
 
-CREATE TABLE "genre" (
-  "genre_id" int NOT NULL PRIMARY KEY,
-  "genre_name" varchar(255)
+CREATE TABLE if not exists "users" (
+"user_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+"email" varchar(255) NOT NULL UNIQUE,
+"login" varchar(255) NOT NULL UNIQUE,
+"name" varchar(255) NOT NULL,
+"birthday" date
 );
 
-CREATE TABLE "film_genres" (
-  "film_id" int NOT NULL ,
-  "genre_id" int NOT NULL
+-- Затем создаем таблицы, которые ссылаются на другие
+CREATE TABLE if not exists "films" (
+"film_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+"name" varchar(255) NOT NULL,
+"description" varchar(255) NOT NULL,
+"release_date" date NOT NULL,
+"duration" int NOT NULL,
+"mpa_id" int NOT NULL,
+FOREIGN KEY ("mpa_id") REFERENCES "mpa_rating" ("mpa_id")
 );
 
-CREATE TABLE "rating" (
-  "rating_id" int NOT NULL PRIMARY KEY,
-  "rating_name" varchar(255) NOT NULL
+CREATE TABLE if not exists "film_genres" (
+"film_id" int NOT NULL,
+"genre_id" int NOT NULL,
+PRIMARY KEY("film_id", "genre_id"),
+FOREIGN KEY ("film_id") REFERENCES "films" ("film_id"),
+FOREIGN KEY ("genre_id") REFERENCES "genres" ("genre_id")
 );
 
-CREATE TABLE "friends" (
-  "user_id" int NOT NULL,
-  "friend_id" int NOT NULL
+CREATE TABLE if not exists "friends" (
+"user_id" int NOT NULL,
+"friend_id" int NOT NULL,
+PRIMARY KEY ("user_id", "friend_id"),
+FOREIGN KEY ("user_id") REFERENCES "users" ("user_id"),
+FOREIGN KEY ("friend_id") REFERENCES "users" ("user_id")
 );
 
-ALTER TABLE "film_genres" ADD FOREIGN KEY ("film_id") REFERENCES "film" ("id");
-
-ALTER TABLE "film_genres" ADD FOREIGN KEY ("genre_id") REFERENCES "genre" ("genre_id");
-
-ALTER TABLE "film" ADD FOREIGN KEY ("rating_id") REFERENCES "rating" ("rating_id");
-
-CREATE TABLE "user_friends" (
-  "user_id" int,
-  "friends_user_id" int,
-  PRIMARY KEY ("user_id", "friends_user_id")
+CREATE TABLE if not exists "film_likes" (
+"film_id" int NOT NULL,
+"user_id" int NOT NULL,
+PRIMARY KEY ("film_id", "user_id"),
+FOREIGN KEY ("film_id") REFERENCES "films" ("film_id"),
+FOREIGN KEY ("user_id") REFERENCES "users" ("user_id")
 );
-
-ALTER TABLE "user_friends" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
-
-ALTER TABLE "user_friends" ADD FOREIGN KEY ("friends_user_id") REFERENCES "friends" ("user_id");
-
-
-CREATE TABLE "friends_user" (
-  "friends_friend_id" int,
-  "user_id" int,
-  PRIMARY KEY ("friends_friend_id", "user_id")
-);
-
-ALTER TABLE "friends_user" ADD FOREIGN KEY ("friends_friend_id") REFERENCES "friends" ("friend_id");
-
-ALTER TABLE "friends_user" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
-
 
