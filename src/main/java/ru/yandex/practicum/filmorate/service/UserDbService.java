@@ -33,8 +33,8 @@ public class UserDbService {
     }
 
     public UserDto getUserById(Long userId) {
-        return userRepository.findById(userId).
-                map(UserMapper::mapToUserDto)
+        return userRepository.findById(userId)
+                .map(UserMapper::mapToUserDto)
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден с ID: " + userId));
     }
 
@@ -86,41 +86,41 @@ public class UserDbService {
     public void addFriend(Long id, Long friendId) {
         log.info("Добавление пользователя в друзья");
 
-        userRepository.findById(id).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + id + " не найден"));
+        userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + id + " не найден"));
 
-        userRepository.findById(friendId).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + friendId + " не найден"));
+        userRepository.findById(friendId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + friendId + " не найден"));
 
         userRepository.addFriend(id, friendId);
     }
 
     public boolean removeFriend(Long userId, Long friendId) {
         log.info("Удаление из друзей");
-        userRepository.findById(userId).
-                orElseThrow(() -> new NotFoundException("Пользователь с userId " + userId + " не найден"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с userId " + userId + " не найден"));
 
-        userRepository.findById(friendId).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким friendId: " + friendId + " не найден"));
+        userRepository.findById(friendId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким friendId: " + friendId + " не найден"));
 
         return userRepository.deleteFriend(userId, friendId);
     }
 
     public List<User> viewFriends(Long id) {
         log.info("Просмотр друзей пользователя");
-        userRepository.findById(id).
-                orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
+        userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с id " + id + " не найден"));
 
         return userRepository.viewFriends(id);
     }
 
     public List<User> commonFriends(Long userId, Long otherId) {
         log.info("Пересечение друзей у пользователей");
-        userRepository.findById(userId).
-                orElseThrow(() -> new NotFoundException("Пользователь с userId " + userId + " не найден"));
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с userId " + userId + " не найден"));
 
-        userRepository.findById(otherId).
-                orElseThrow(() -> new NotFoundException("Пользователь с таким friendId: " + otherId + " не найден"));
+        userRepository.findById(otherId)
+                .orElseThrow(() -> new NotFoundException("Пользователь с таким friendId: " + otherId + " не найден"));
 
         return userRepository.viewCommonFriends(userId, otherId);
     }
