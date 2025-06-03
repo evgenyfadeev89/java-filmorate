@@ -37,18 +37,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@Import({FilmDbController.class
-        , FilmDbService.class
-        , FilmRepository.class
-        , FilmRowMapper.class
-        , MpaRepository.class
-        , MpaRowMapper.class
-        , GenreRepository.class
-        , GenreRowMapper.class
-        , UserDbController.class
-        , UserDbService.class
-        , UserRepository.class
-        , UserRowMapper.class})
+@Import({FilmDbController.class,
+        FilmDbService.class,
+        FilmRepository.class,
+        FilmRowMapper.class,
+        MpaRepository.class,
+        MpaRowMapper.class,
+        GenreRepository.class,
+        GenreRowMapper.class,
+        UserDbController.class,
+        UserDbService.class,
+        UserRepository.class,
+        UserRowMapper.class})
 class FilmDbControllerTest {
 
     @Autowired

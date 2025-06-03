@@ -26,17 +26,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY) // Используем in-memory H2
 @Transactional
-@Import({MpaDbController.class
-        , MpaRepository.class
-        , MpaRowMapper.class
-        , GenreRepository.class
-        , GenreRowMapper.class
-        , FilmDbService.class
-        , FilmRepository.class
-        , FilmRowMapper.class
-        , UserDbService.class
-        , UserRepository.class
-        , UserRowMapper.class})
+@Import({MpaDbController.class,
+        MpaRepository.class,
+        MpaRowMapper.class,
+        GenreRepository.class,
+        GenreRowMapper.class,
+        FilmDbService.class,
+        FilmRepository.class,
+        FilmRowMapper.class,
+        UserDbService.class,
+        UserRepository.class,
+        UserRowMapper.class})
 class MpaDbControllerTest {
 
     @Autowired

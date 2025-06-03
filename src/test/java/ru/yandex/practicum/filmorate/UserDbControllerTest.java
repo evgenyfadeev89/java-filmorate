@@ -26,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@Import({UserDbController.class
-        , UserDbService.class
-        , UserRepository.class
-        , UserRowMapper.class})
+@Import({UserDbController.class,
+        UserDbService.class,
+        UserRepository.class,
+        UserRowMapper.class})
 class UserDbControllerTest {
 
     @Autowired
