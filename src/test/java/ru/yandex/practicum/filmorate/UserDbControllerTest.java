@@ -212,7 +212,7 @@ class UserDbControllerTest {
         userDbController.addFriend(usrDto.getId(), usrCommonDto.getId());
         userDbController.addFriend(usrUpdDto.getId(), usrCommonDto.getId());
 
-        assertThat(userDbController.commonFriends(usrDto.getId()
-                , usrUpdDto.getId()).get(0).getId()).isEqualTo(usrCommonDto.getId());
+        assertThat(userDbController.commonFriends(usrDto.getId(),
+                usrUpdDto.getId()).get(0).getId()).isEqualTo(usrCommonDto.getId());
     }
 }
