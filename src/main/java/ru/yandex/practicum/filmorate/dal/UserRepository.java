@@ -40,7 +40,7 @@ public class UserRepository extends BaseRepository<User> {
             "LEFT JOIN friends f ON f.user_id = u.user_id " +
             "WHERE u.user_id IN (SELECT friend_id FROM friends WHERE user_id = ?" +
             "and friend_id in (SELECT friend_id FROM friends WHERE user_id = ?))";
-    private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?";
+    private static final String DELETE_QUERY = "DELETE FROM users WHERE user_id = ?";
     private static final String DELETE_FRIEND_QUERY = "DELETE FROM friends WHERE user_id = ? and friend_id = ?";
     private static final String INSERT_QUERY = "INSERT INTO users (email, login, name, birthday) " +
             "VALUES (?, ?, ?, ?)";

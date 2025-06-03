@@ -41,7 +41,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.OK)
-    public ErrorResponse handleValidationParametrException(final ValidationParametrException e) {
+    public ErrorResponse handleValidationParametrException(final ValidationParameterException e) {
         return new ErrorResponse("Некорректные данные нового пользователя");
     }
 

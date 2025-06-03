@@ -131,7 +131,7 @@ public class FilmRepository extends BaseRepository<Film> {
         return film;
     }
 
-    public void addLike(Long filmId, Long userId) {
-        super.update(INSERT_LIKE_FILM_QUERY, filmId, userId);
+    public boolean addLike(Long filmId, Long userId) {
+        return super.update(INSERT_LIKE_FILM_QUERY, filmId, userId);
     }
 }

@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ValidationParametrException extends RuntimeException {
-    public ValidationParametrException(String message) {
+public class ValidationParameterException extends RuntimeException {
+    public ValidationParameterException(String message) {
         super(message);
     }
 }

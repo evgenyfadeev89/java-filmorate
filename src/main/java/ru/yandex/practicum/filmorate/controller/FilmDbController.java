@@ -3,19 +3,15 @@ package ru.yandex.practicum.filmorate.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.dto.film.FilmDto;
 import ru.yandex.practicum.filmorate.dto.film.NewFilmRequest;
 import ru.yandex.practicum.filmorate.dto.film.UpdateFilmRequest;
-import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.service.FilmDbService;
 
 import java.util.List;
 
-@Qualifier
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -50,8 +46,8 @@ public class FilmDbController {
     }
 
     @PutMapping("/films/{id}/like/{userId}")
-    public void addLike(@Valid @PathVariable Long id, @PathVariable Long userId) {
-        filmDbService.addLike(id, userId);
+    public boolean addLike(@Valid @PathVariable Long id, @PathVariable Long userId) {
+        return filmDbService.addLike(id, userId);
     }
 
     @DeleteMapping("/films/{id}/like/{userId}")
@@ -62,29 +58,5 @@ public class FilmDbController {
     @GetMapping("/films/popular")
     public List<FilmDto> topLikeFilms(@RequestParam(required = false, defaultValue = "10") Long count) {
         return filmDbService.topLikeFilms(count);
-    }
-
-    @GetMapping("/mpa/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Mpa findMpaById(@PathVariable("id") Long id) {
-        return filmDbService.getMpaById(id);
-    }
-
-    @GetMapping("/mpa")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Mpa> findMpaAll() {
-        return filmDbService.getMpaAll();
-    }
-
-    @GetMapping("/genres/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Genre findGenreById(@PathVariable("id") Long id) {
-        return filmDbService.getGenreById(id);
-    }
-
-    @GetMapping("/genres")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Genre> findGenreAll() {
-        return filmDbService.getGenreAll();
     }
 }

@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.FilmRepository;
 import ru.yandex.practicum.filmorate.dal.GenreRepository;
@@ -21,7 +20,6 @@ import ru.yandex.practicum.filmorate.model.Mpa;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Qualifier
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,7 +29,7 @@ public class FilmDbService {
     private final UserRepository userRepository;
     private final GenreRepository genreRepository;
 
-    public void addLike(Long id, Long userId) {
+    public boolean addLike(Long id, Long userId) {
         log.info("Добавление нового лайка");
         filmRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Фильм с id " + id + " не найден"));
@@ -39,7 +37,7 @@ public class FilmDbService {
         userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с таким userId: " + userId + " не найден"));
 
-        filmRepository.addLike(id, userId);
+        return filmRepository.addLike(id, userId);
     }
 
     public boolean removeLike(Long filmId, Long userId) {

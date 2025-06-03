@@ -52,11 +52,12 @@ public abstract class BaseRepository<T> {
         return rowsDeleted > 0;
     }
 
-    protected void update(String query, Object... params) {
+    protected boolean update(String query, Object... params) {
         int rowsUpdated = jdbc.update(query, params);
         if (rowsUpdated == 0) {
             throw new InternalServerException("Не удалось обновить данные");
         }
+        return rowsUpdated > 0;
     }
 
     protected long insert(String query, Object... params) {

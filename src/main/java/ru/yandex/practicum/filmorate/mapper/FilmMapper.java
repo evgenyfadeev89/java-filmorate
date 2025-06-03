@@ -25,7 +25,7 @@ public class FilmMapper {
         }
         if (film.getLikes() == null) {
             HashSet<Long> like = new HashSet<>();
-            film.setLikes(like);
+            dto.setLikes(like);
         } else {
             dto.setLikes(film.getLikes());
         }

@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.UserRepository;
 import ru.yandex.practicum.filmorate.dto.user.NewUserRequest;
@@ -11,14 +10,13 @@ import ru.yandex.practicum.filmorate.dto.user.UserDto;
 import ru.yandex.practicum.filmorate.exception.ConditionsNotMetException;
 import ru.yandex.practicum.filmorate.exception.DuplicatedDataException;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
-import ru.yandex.practicum.filmorate.exception.ValidationParametrException;
+import ru.yandex.practicum.filmorate.exception.ValidationParameterException;
 import ru.yandex.practicum.filmorate.mapper.UserMapper;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Qualifier
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -72,7 +70,7 @@ public class UserDbService {
         if (!request.hasValidBirthday() ||
                 !request.hasValidLogin() ||
                 !request.hasValidEmail()) {
-            throw new ValidationParametrException("Некорректные данные нового пользователя");
+            throw new ValidationParameterException("Некорректные данные нового пользователя");
         }
 
         updatedUser = userRepository.update(updatedUser);
