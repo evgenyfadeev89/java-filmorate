@@ -32,5 +32,23 @@ public class ErrorHandler {
     public ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
         return new ErrorResponse("Некорректные параметры запроса");
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConditionsNotMetException(final ConditionsNotMetException e) {
+        return new ErrorResponse("Некорректные параметры запроса");
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.OK)
+    public ErrorResponse handleValidationParametrException(final ValidationParameterException e) {
+        return new ErrorResponse("Некорректные данные нового пользователя");
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleDuplicatedDataException(final DuplicatedDataException e) {
+        return new ErrorResponse("Дублирующиеся данные");
+    }
 }
 
